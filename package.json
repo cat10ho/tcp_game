@@ -1,0 +1,21 @@
+{
+  "name": "tcp_game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/cat10ho/tcp_game.git",
+  "author": "이이삭 <dlrltn1091@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "lodash": "^4.17.21",
+    "long": "^5.2.3",
+    "mysql2": "^3.12.0",
+    "protobufjs": "^7.4.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  }
+}
