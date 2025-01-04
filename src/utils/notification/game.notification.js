@@ -17,26 +17,26 @@ const makeNotification = (message, type) => {
   // 길이 정보와 메시지를 함께 전송
   return Buffer.concat([packetLength, packetType, message]);
 };
-//
-// export const createLocationPacket = (users) => {
-//   const protoMessages = getProtoMessages();
-//   const Location = protoMessages.gameNotification.LocationUpdate;
-//
-//   const payload = { users };
-//   const message = Location.create(payload);
-//   const locationPacket = Location.encode(message).finish();
-//   return makeNotification(locationPacket, 3);
-// };
-//
-// export const gameStartNotification = (gameId, timestamp) => {
-//   const protoMessages = getProtoMessages();
-//   const Start = protoMessages.gameNotification.Start;
-//
-//   const payload = { gameId, timestamp };
-//   const message = Start.create(payload);
-//   const startPacket = Start.encode(message).finish();
-//   return makeNotification(startPacket, 2);
-// };
+
+export const createLocationPacket = (users) => {
+  const protoMessages = getProtoMessages();
+  const Location = protoMessages.gameNotification.LocationUpdate;
+
+  const payload = { users };
+  const message = Location.create(payload);
+  const locationPacket = Location.encode(message).finish();
+  return makeNotification(locationPacket, PACKET_TYPE.LOCATION);
+};
+
+export const gameStartNotification = (gameId, timestamp) => {
+  const protoMessages = getProtoMessages();
+  const Start = protoMessages.gameNotification.Start;
+
+  const payload = { gameId, timestamp };
+  const message = Start.create(payload);
+  const startPacket = Start.encode(message).finish();
+  return makeNotification(startPacket, PACKET_TYPE.GAME_START);
+};
 
 export const createPingPacket = (timestamp) => {
   const protoMessages = getProtoMessages();
