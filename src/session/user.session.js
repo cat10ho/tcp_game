@@ -1,7 +1,8 @@
 import { userSessions } from './sessions.js';
+import User from '../classes/models/user.class.js';
 
 export const addUser = (socket, uuid) => {
-  const user = { socket, id: uuid, sequence: 0 };
+  const user = new User(uuid, socket);
   userSessions.push(user);
   return user;
 };
@@ -18,9 +19,9 @@ export const getUserById = (id) => {
 };
 
 export const getNextSequence = (id) => {
-    const user = getUserById(id);
-    if (user) {
-      return ++user.sequence;
-    }
-    return null;
-  };
+  const user = getUserById(id);
+  if (user) {
+    return user.getNextSequence();
+  }
+  return null;
+};
