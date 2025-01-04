@@ -117,7 +117,7 @@ client.on('data', (data) => {
   const totalHeaderLength = TOTAL_LENGTH + PACKET_TYPE_LENGTH;
   // 2. 패킷 타입 정보 수신 (1바이트)
   const packetType = data.readUInt8(4);
-  const packet = data.slice(totalHeaderLength, totalHeaderLength + length); // 패킷 데이터
+  const packet = data.slice(totalHeaderLength, length); // 패킷 데이터
   const protoMessages = getProtoMessages();
 
   if (packetType === 1) {
@@ -161,7 +161,7 @@ client.on('data', (data) => {
       // 위치 업데이트 패킷 전송
       setInterval(() => {
         updateLocation(client);
-      }, 1000);
+      }, 100);
     } catch (error) {
       console.error(error);
     }

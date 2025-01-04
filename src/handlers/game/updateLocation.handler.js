@@ -25,4 +25,4 @@ const updateLocationHandler = ({ socket, userId, payload }) => {
   }
 };
 
-export default updateLocationHandler
+export default updateLocationHandler;
