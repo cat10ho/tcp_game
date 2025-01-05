@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import protobuf from 'protobufjs';
+import protobuf from 'protobufjs'; //프로토 뭐 할때 쓰는거 다 가져오기.
 import { packetNames } from '../protobuf/packetNames.js';
 
 // 현재 파일의 절대 경로 추출
@@ -12,13 +12,13 @@ const __dirname = path.dirname(__filename);
 const protoDir = path.join(__dirname, '../protobuf');
 
 // 주어진 디렉토리 내 모든 proto 파일을 재귀적으로 찾는 함수
-const getAllProtoFiles = (dir, fileList = []) => {
+const getAllProtoFiles = (dir, fileList = []) => { //만약 기존에 사용하던게 있으면 여기서 받아서 사용.
   const files = fs.readdirSync(dir);
   files.forEach((file) => {
     const filePath = path.join(dir, file);
-    if (fs.statSync(filePath).isDirectory()) {
+    if (fs.statSync(filePath).isDirectory()) { //statSync(filePath)-> 확인해 보기, 이게 뭔지.isDirectory() 디렉토리라면~~
       getAllProtoFiles(filePath, fileList); //디렉토리면 다시 들어가기.
-    } else if (path.extname(file) === '.proto') {
+    } else if (path.extname(file) === '.proto') {//확장자 이름이 프로토일때만.
       fileList.push(filePath);
     }
   });
@@ -34,16 +34,16 @@ const protoMessages = {};
 // 모든 .proto 파일을 로드하여 프로토 메시지를 초기화합니다.
 export const loadProtos = async () => {
   try {
-    const root = new protobuf.Root();
+    const root = new protobuf.Root(); //여기서 인스턴스 생성. root 가 밑에서 로드해줌. 프로토 파일들을.
 
     // 비동기 병렬 처리로 프로토 파일 로드
     await Promise.all(protoFiles.map((file) => root.load(file))); //파일을 로드.
 
     // packetNames 에 정의된 패킷들을 등록
-    for (const [namespace, types] of Object.entries(packetNames)) {
-      protoMessages[namespace] = {};
+    for (const [namespace, types] of Object.entries(packetNames)) {//entries를 통해 키와 값을 다 가져옴.
+      protoMessages[namespace] = {}; //namespace는 common같은거 types는 안에 있는 전부.
       for (const [type, typeName] of Object.entries(types)) {
-        protoMessages[namespace][type] = root.lookupType(typeName);//타입을 객체에서 찾음.
+        protoMessages[namespace][type] = root.lookupType(typeName);// 타입을 찾아서 로드해서 넣어줌.
       }
     }
 

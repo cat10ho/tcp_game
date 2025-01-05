@@ -4,7 +4,7 @@
  import { testAllConnections } from '../utils/db/testConnection.js';
  import pools from '../db/database.js';
  
- const initServer = async () => {
+ const initServer = async () => { //이곳은 서버가 시작되기 전에 시작되는 것.
    try {
      await loadGameAssets();
      await loadProtos();

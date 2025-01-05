@@ -5,13 +5,13 @@ import CustomError from '../error/customError.js';
 import { ErrorCodes } from '../error/errorCodes.js';
 
 export const packetParser = (data) => {
-  const protoMessages = getProtoMessages();
+  const protoMessages = getProtoMessages(); //프로토 메세지를 로드.
 
   // 공통 패킷 구조를 디코딩
   const Packet = protoMessages.common.Packet;
   let packet;
   try {
-    packet = Packet.decode(data);
+    packet = Packet.decode(data); //데이터를 디코드 해서 넣어줌.
   } catch (error) {
     throw new CustomError(ErrorCodes.PACKET_DECODE_ERROR, '패킷 디코딩 중 오류가 발생했습니다.');
   }

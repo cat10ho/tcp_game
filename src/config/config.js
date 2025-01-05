@@ -13,7 +13,7 @@ import {
   DB2_PORT,
 } from '../constants/env.js';
 
-export const config = {
+export const config = { //이 config 하나로 모든 환경변수를 가져옴.
   server: {
     port: PORT,
     host: HOST,

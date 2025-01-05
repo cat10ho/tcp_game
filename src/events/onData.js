@@ -9,7 +9,7 @@ import { ErrorCodes } from '../utils/error/errorCodes.js';
 import { getProtoMessages } from '../init/loadProtos.js';
 
 export const onData = (socket) => async (data) => {
-  // 기존 버퍼에 새로 수신된 데이터를 추가
+  // 데이터가 계속 오니까 여기에 쌓는거.
   socket.buffer = Buffer.concat([socket.buffer, data]);
 
   // 패킷의 총 헤더 길이 (패킷 길이 정보 + 타입 정보)
@@ -17,16 +17,16 @@ export const onData = (socket) => async (data) => {
 
   // 버퍼에 최소한 전체 헤더가 있을 때만 패킷을 처리
   while (socket.buffer.length >= totalHeaderLength) {
-    // 1. 패킷 길이 정보 수신 (4바이트)
-    const length = socket.buffer.readUInt32BE(0);
+    // 1. 패킷 길이 정보 수신 (4바이트) -> 여기서 길이 확인.
+    const length = socket.buffer.readUInt32BE(0); 
 
     // 2. 패킷 타입 정보 수신 (1바이트)
     const packetType = socket.buffer.readUInt8(config.packet.totalLength);
-    // 3. 패킷 전체 길이 확인 후 데이터 수신
+    // 3. 패킷 전체 길이 확인 후 데이터 수신->길이가 랭스가 되면 시작.
     if (socket.buffer.length >= length) {
       // 패킷 데이터를 자르고 버퍼에서 제거
-      const packet = socket.buffer.slice(totalHeaderLength, length);
-      socket.buffer = socket.buffer.slice(length);
+      const packet = socket.buffer.slice(totalHeaderLength, length);//이건 이번에 쓸 패킷 자르기.
+      socket.buffer = socket.buffer.slice(length);//자르고 남은건 다음꺼니까 다시 넣어줌.
 
       try {
         switch (packetType) {
