@@ -37,13 +37,13 @@ export const loadProtos = async () => {
     const root = new protobuf.Root();
 
     // 비동기 병렬 처리로 프로토 파일 로드
-    await Promise.all(protoFiles.map((file) => root.load(file)));
+    await Promise.all(protoFiles.map((file) => root.load(file))); //파일을 로드.
 
     // packetNames 에 정의된 패킷들을 등록
     for (const [namespace, types] of Object.entries(packetNames)) {
       protoMessages[namespace] = {};
       for (const [type, typeName] of Object.entries(types)) {
-        protoMessages[namespace][type] = root.lookupType(typeName);
+        protoMessages[namespace][type] = root.lookupType(typeName);//타입을 객체에서 찾음.
       }
     }
 
