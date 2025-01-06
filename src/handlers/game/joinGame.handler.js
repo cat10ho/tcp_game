@@ -20,7 +20,7 @@ const joinGameHandler = ({ socket, userId, payload }) => {
       throw new CustomError(ErrorCodes.USER_NOT_FOUND, '유저를 찾을 수 없습니다.');
     }
     const existUser = gameSession.getUser(user.id);
-    if (!existUser) {
+    if (!existUser) {// 게임에 참여하지 않고 있을 때만.
       gameSession.addUser(user);
     }
 

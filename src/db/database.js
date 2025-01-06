@@ -23,7 +23,7 @@ const createPool = (dbConfig) => {
     const date = new Date();
     // 쿼리 실행시 로그
     console.log(
-      `[${formatDate(date)}] Executing query: ${sql} ${
+      `[${formatDate(date)}] Executing query: ${sql} ${//formatDate(date) 그냥 뭐 모양 이쁘게 나오게 하는거임.
         params ? `, ${JSON.stringify(params)}` : ``
       }`,
     );

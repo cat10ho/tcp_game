@@ -12,21 +12,21 @@ export const createResponse = (handlerId, responseCode, data = null, userId) => 
     responseCode,
     timestamp: Date.now(),
     data: data ? Buffer.from(JSON.stringify(data)) : null,
-    sequence: userId ? getNextSequence(userId) : 0,
+    sequence: userId ? getNextSequence(userId) : 0, //호출수를 안받는게 있을수 있으서?
   };
 
-  const buffer = Response.encode(responsePayload).finish();
+  const buffer = Response.encode(responsePayload).finish(); //피니쉬를 넣어줘야 한데, 사용 방법.
 
   // 패킷 길이 정보를 포함한 버퍼 생성
   const packetLength = Buffer.alloc(config.packet.totalLength);
   packetLength.writeUInt32BE(
     buffer.length + config.packet.totalLength + config.packet.typeLength,
     0,
-  );
+  ); //마지막 0은 0번째 부터.
 
   // 패킷 타입 정보를 포함한 버퍼 생성
   const packetType = Buffer.alloc(config.packet.typeLength);
-  packetType.writeUInt8(PACKET_TYPE.NORMAL, 0);
+  packetType.writeUInt8(PACKET_TYPE.NORMAL, 0); //이것도 0부터, 그냥 저기에 넣는거임.
 
   // 길이 정보와 메시지를 함께 전송
   return Buffer.concat([packetLength, packetType, buffer]);

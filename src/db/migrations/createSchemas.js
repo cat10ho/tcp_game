@@ -10,7 +10,7 @@ const executeSqlFile = async (pool, filePath) => {
   const sql = fs.readFileSync(filePath, 'utf8');
   const queries = sql
     .split(';')
-    .map((query) => query.trim())
+    .map((query) => query.trim()) //이건 빈칸 지우는거.
     .filter((query) => query.length > 0);
 
   for (const query of queries) {
@@ -22,7 +22,7 @@ const createSchemas = async () => {
   const sqlDir = path.join(__dirname, '../sql');
   try {
     // USER_DB SQL 파일 실행
-    await executeSqlFile(pools.USER_DB, path.join(sqlDir, 'user_db.sql'));
+    await executeSqlFile(pools.USER_DB, path.join(sqlDir, 'user_db.sql')); //유저 디비에서 저거 실행시키는거.
 
     console.log('데이터베이스 테이블이 성공적으로 생성되었습니다.');
   } catch (error) {
@@ -38,4 +38,4 @@ createSchemas()
   .catch((error) => {
     console.error('마이그레이션 중 오류가 발생했습니다:', error);
     process.exit(1); // 오류 발생 시 프로세스 종료
-  });
+  }); //이 파일을 실행시키면 생성됨. 서버 실행중 알아서 실행 안함.

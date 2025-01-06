@@ -11,9 +11,9 @@ const initialHandler = async ({ socket, userId, payload }) => {
     let user = await findUserByDeviceID(deviceId);
 
     if (!user) {
-      user = await createUser(deviceId);
+      user = await createUser(deviceId); //없으면 만들고
     } else {
-      await updateUserLogin(user.id);
+      await updateUserLogin(user.id); //있으면 업데이트.
     }
 
     addUser(user.id, socket);
