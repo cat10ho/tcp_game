@@ -20,7 +20,7 @@ class Game {
     }
     this.users.push(user);
 
-    this.intervalManager.addPlayer(user.id, user.ping.bind(user), 1000);
+    this.intervalManager.addPlayer(user.id, user.ping.bind(user), 1000); //핑을 쓸때 바인드 써야함. 마지막은 주기(ms)
     if (this.users.length === MAX_PLAYERS) {
       setTimeout(() => {
         this.startGame();

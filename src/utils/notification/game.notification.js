@@ -18,7 +18,7 @@ const makeNotification = (message, type) => {
   return Buffer.concat([packetLength, packetType, message]);
 };
 
-export const createLocationPacket = (users) => {
+export const createLocationPacket = (users) => {//위치정보 
   const protoMessages = getProtoMessages();
   const Location = protoMessages.gameNotification.LocationUpdate;
 
